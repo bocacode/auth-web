@@ -17,7 +17,10 @@ export default function Signup({ setToken, setIsUser }) {
       body: JSON.stringify({ email, password: hashedPassword })
     })
       .then(response => response.json())
-      .then(data => setToken(data.token))
+      .then(data => {
+        setToken(data.token)
+        localStorage.setItem('token', data.token)
+      })
       .catch(error => alert(error))
   }
   return (

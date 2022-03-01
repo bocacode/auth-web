@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function UserList({ token }) {
+export default function UserList({ token, setToken }) {
   const [userList, setUserList] = useState()
   useEffect(() => {
     fetch('http://localhost:3001/users', {
@@ -14,6 +14,10 @@ export default function UserList({ token }) {
       .then(data => setUserList(data.users))
       .catch(alert)
   }, [token])
+  const handleLogout = () => {
+    setToken(null)
+    localStorage.setItem('token', null)
+  }
   return (
     <>
       <h1>User List Component</h1>
@@ -23,6 +27,7 @@ export default function UserList({ token }) {
           return <p key={user.id}>{user.email}, {user.userRole}</p>
         })
       }
+      <button onClick={handleLogout}>Logout</button>
     </>
   )
 }
